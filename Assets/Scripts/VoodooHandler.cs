@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class VoodooHandler : MonoBehaviour
 {
-    private NavMeshAgent voodoo;
+    public NavMeshAgent voodoo;
     public Transform TargetPlayer;
+    public GameObject gameOver;
 
-    public GameObject GameOver;
     void Start()
     {
         voodoo = GetComponent<NavMeshAgent>();
@@ -16,7 +16,6 @@ public class VoodooHandler : MonoBehaviour
 
     void Update()
     {
-
         voodoo.SetDestination(TargetPlayer.position);
     }
 
@@ -24,11 +23,16 @@ public class VoodooHandler : MonoBehaviour
     {
         if (other.CompareTag("item"))
         {
-
             Debug.Log("item hit enemy");
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-            GameOver.SetActive(true);
+            gameObject.SetActive(false);
+
+
+        }
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("enemy hit player");
+            gameOver.SetActive(true);
+            Time.timeScale = 0f;
         }
 
 
